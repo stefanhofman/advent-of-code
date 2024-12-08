@@ -1,0 +1,6 @@
+[workspace]
+resolver = "2"
+members = ["advent_of_code_2024/"]
+
+[workspace.dependencies]
+clap = { version = "4.5.23", features = ["derive"] }
