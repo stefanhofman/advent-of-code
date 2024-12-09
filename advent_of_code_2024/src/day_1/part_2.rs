@@ -5,49 +5,45 @@ use std::{
 };
 
 pub(crate) fn main() -> io::Result<()> {
-    let file_contents = File::open("./advent_of_code_2024/src/day_1/input.txt")?;
-    let reader = io::BufReader::new(file_contents);
+    let file = File::open("./advent_of_code_2024/src/day_1/input.txt")?;
+    let reader = io::BufReader::new(file);
 
     let mut hash_map: HashMap<i32, i32> = HashMap::new();
 
     for line in reader.lines() {
-        let number_line: Vec<i32> = line?
-            .clone()
+        let line = line?;
+        let numbers: Vec<i32> = line
             .split_whitespace()
-            .map(|n| n.parse::<i32>().unwrap())
+            .map(|n| n.parse().expect("Failed to parse number"))
             .collect();
 
-        // If the value is negative, make it positive
-        if let Some(value) = hash_map.get_mut(&number_line[0]) {
-            if *value < 0 {
-                *value = value.abs();
-            }
-        } else {
-            // If the value is not in the hash map, add it
-            hash_map.insert(number_line[0], 0);
+        if numbers.len() != 2 {
+            continue; // Skip lines that don't have exactly two numbers
         }
 
-        // If the second number is in the hash map, increment the value by 1
-        if let Some(value) = hash_map.get_mut(&number_line[1]) {
-            if *value < 0 {
-                *value = value.abs();
-            }
-            *value += 1;
-        } else {
-            // If the second number is not in the hash map, add it to the list as a negative number
-            hash_map.insert(number_line[1], -1);
-        }
+        let (num1, num2) = (numbers[0], numbers[1]);
+
+        // Update the first number in the hash map
+        hash_map
+            .entry(num1)
+            .and_modify(|v| *v = v.abs())
+            .or_insert(0);
+
+        // Update the second number in the hash map
+        hash_map
+            .entry(num2)
+            .and_modify(|v| {
+                *v = v.abs();
+                *v += 1;
+            })
+            .or_insert(-1);
     }
 
-    let mut similarity_score = 0;
-
-    for key in hash_map.keys() {
-        let count = hash_map.get(key).unwrap();
-
-        if *count > 0 {
-            similarity_score += key * count;
-        }
-    }
+    let similarity_score: i32 = hash_map
+        .iter()
+        .filter(|(_, &count)| count > 0)
+        .map(|(&key, &count)| key * count)
+        .sum();
 
     println!("The similarity score is: {}", similarity_score);
 

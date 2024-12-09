@@ -7,3 +7,5 @@ edition = "2021"
 
 [dependencies]
 clap = { workspace = true }
+paste = { workspace = true }
+regex = { version = "1.11.1" }

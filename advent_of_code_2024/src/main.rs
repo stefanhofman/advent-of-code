@@ -1,5 +1,6 @@
 mod day_1;
 mod day_2;
+mod day_3;
 
 use clap::Parser;
 use std::io;
@@ -19,15 +20,13 @@ struct Args {
 fn main() -> io::Result<()> {
     let args = Args::parse();
 
-    if args.day == 1 && args.part == 1 {
-        return day_1::part_1::main();
-    } else if args.day == 1 && args.part == 2 {
-        return day_1::part_2::main();
-    } else if args.day == 2 && args.part == 1 {
-        return day_2::part_1::main();
-    } else if args.day == 2 && args.part == 2 {
-        return day_2::part_2::main();
+    match (args.day, args.part) {
+        (1, 1) => day_1::part_1::main(),
+        (1, 2) => day_1::part_2::main(),
+        (2, 1) => day_2::part_1::main(),
+        (2, 2) => day_2::part_2::main(),
+        (3, 1) => day_3::part_1::main(),
+        (3, 2) => day_3::part_2::main(),
+        _ => panic!("Invalid day or part"),
     }
-
-    Ok(())
 }

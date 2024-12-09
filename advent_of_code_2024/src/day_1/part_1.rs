@@ -5,26 +5,30 @@ use std::{
 };
 
 pub(crate) fn main() -> io::Result<()> {
-    let file_contents = File::open("./advent_of_code_2024/src/day_1/input.txt")?;
-    let reader = io::BufReader::new(file_contents);
+    let file = File::open("./advent_of_code_2024/src/day_1/input.txt")?;
+    let reader = io::BufReader::new(file);
 
-    let mut heap_one: BinaryHeap<i32> = BinaryHeap::new();
-    let mut heap_two: BinaryHeap<i32> = BinaryHeap::new();
+    let mut heap_one = BinaryHeap::new();
+    let mut heap_two = BinaryHeap::new();
 
     for line in reader.lines() {
-        let number_line: Vec<i32> = line?
-            .clone()
+        let line = line?;
+        let numbers: Vec<i32> = line
             .split_whitespace()
-            .map(|n| n.parse::<i32>().unwrap())
+            .map(|n| n.parse().expect("Failed to parse number"))
             .collect();
 
-        heap_one.push(number_line[0].clone());
-        heap_two.push(number_line[1].clone());
+        if let [first, second] = numbers[..] {
+            heap_one.push(first);
+            heap_two.push(second);
+        } else {
+            eprintln!("Unexpected number of elements in line: {}", line);
+        }
     }
 
     let mut total_distance = 0;
-    while let Some(element) = heap_one.pop() {
-        total_distance += (element - heap_two.pop().unwrap()).abs();
+    while let (Some(element_one), Some(element_two)) = (heap_one.pop(), heap_two.pop()) {
+        total_distance += (element_one - element_two).abs();
     }
 
     println!("The total distance is: {}", total_distance);
