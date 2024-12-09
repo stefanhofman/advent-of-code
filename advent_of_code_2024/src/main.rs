@@ -1,6 +1,7 @@
 mod day_1;
 mod day_2;
 mod day_3;
+mod day_4;
 
 use clap::Parser;
 use std::io;
@@ -27,6 +28,8 @@ fn main() -> io::Result<()> {
         (2, 2) => day_2::part_2::main(),
         (3, 1) => day_3::part_1::main(),
         (3, 2) => day_3::part_2::main(),
+        (4, 1) => day_4::part_1::main(),
+        (4, 2) => day_4::part_2::main(),
         _ => panic!("Invalid day or part"),
     }
 }
