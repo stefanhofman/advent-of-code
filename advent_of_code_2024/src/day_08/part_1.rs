@@ -11,7 +11,7 @@ struct Point {
 }
 
 pub(crate) fn main() -> io::Result<()> {
-    let file = File::open("./advent_of_code_2024/src/day_8/input.txt")?;
+    let file = File::open("./advent_of_code_2024/src/day_08/input.txt")?;
     let reader = io::BufReader::new(file);
 
     let mut nodes: HashMap<char, Vec<Point>> = HashMap::new();

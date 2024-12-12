@@ -5,7 +5,7 @@ use std::{
 };
 
 pub(crate) fn main() -> io::Result<()> {
-    let file = File::open("./advent_of_code_2024/src/day_1/input.txt")?;
+    let file = File::open("./advent_of_code_2024/src/day_01/input.txt")?;
     let reader = io::BufReader::new(file);
 
     let mut heap_one = BinaryHeap::new();

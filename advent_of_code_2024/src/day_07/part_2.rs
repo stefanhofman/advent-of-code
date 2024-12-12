@@ -23,7 +23,7 @@ macro_rules! calculate {
 }
 
 pub(crate) fn main() -> io::Result<()> {
-    let file = File::open("./advent_of_code_2024/src/day_7/input.txt")?;
+    let file = File::open("./advent_of_code_2024/src/day_07/input.txt")?;
     let reader = io::BufReader::new(file);
 
     let mut sum = 0;
