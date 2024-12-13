@@ -85,10 +85,11 @@ impl Position {
     }
 }
 
-pub(crate) fn main() -> io::Result<()> {
-    let mut stdout = io::stdout();
-    let file = File::open("./advent_of_code_2024/src/day_06/input.txt")?;
+pub(crate) fn main(input: &str) -> io::Result<()> {
+    let file = File::open(input)?;
     let reader = io::BufReader::new(file);
+
+    let mut stdout = io::stdout();
 
     let mut explored: HashMap<Position, bool> = HashMap::new();
     let mut possible_tiles: HashMap<(usize, usize), bool> = HashMap::new();

@@ -3,9 +3,9 @@ use std::{
     io::{self, BufRead},
 };
 
-pub(crate) fn main() -> io::Result<()> {
-    let file_contents = File::open("./advent_of_code_2024/src/day_02/input.txt")?;
-    let reader = io::BufReader::new(file_contents);
+pub(crate) fn main(input: &str) -> io::Result<()> {
+    let file = File::open(input)?;
+    let reader = io::BufReader::new(file);
 
     let mut safe_count = 0;
 

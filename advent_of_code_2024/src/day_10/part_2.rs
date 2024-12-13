@@ -1,5 +1,4 @@
 use std::{
-    collections::HashMap,
     fs::File,
     io::{self, BufRead},
 };
@@ -34,8 +33,7 @@ pub(crate) fn main(input: &str) -> io::Result<()> {
 
     let mut sum = 0;
     starting_points.iter().for_each(|sp| {
-        let mut hash_map: HashMap<usize, bool> = HashMap::new();
-        walk_path(&numbers[*sp], &numbers, &mut sum, &mut hash_map);
+        walk_path(&numbers[*sp], &numbers, &mut sum);
     });
 
     println!("There are {:?} trails", sum);
@@ -43,12 +41,7 @@ pub(crate) fn main(input: &str) -> io::Result<()> {
     Ok(())
 }
 
-fn walk_path<'a>(
-    node: &Node,
-    numbers: &Vec<Node>,
-    count: &'a mut i32,
-    hash_map: &'a mut HashMap<usize, bool>,
-) -> &'a i32 {
+fn walk_path<'a>(node: &Node, numbers: &Vec<Node>, count: &'a mut i32) -> &'a i32 {
     if node.value == 9 {
         *count += 1;
         return count;
@@ -56,11 +49,7 @@ fn walk_path<'a>(
 
     if let Some(next) = &node.next {
         for n in next {
-            if hash_map.contains_key(n) {
-                continue;
-            }
-            hash_map.insert(*n, true);
-            walk_path(&numbers[*n], numbers, count, hash_map);
+            walk_path(&numbers[*n], numbers, count);
         }
     }
 
